@@ -1,4 +1,3 @@
-import Card from "@/app/components/product/Card";
 import DetailCard from "@/app/components/product/DetailCard";
 import Comment from "@/app/components/product/Comment";
 import Header from "@/app/components/product/Header";
