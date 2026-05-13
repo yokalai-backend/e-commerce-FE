@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <header className="flex justify-between items-center">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 bg-white py-3 rounded-2xl">
       <div className="w-6">
         <img className="w-full h-full object-cover" src="navbar.svg" alt="" />
       </div>
