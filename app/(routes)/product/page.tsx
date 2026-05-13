@@ -1,12 +1,16 @@
 "use client";
-import DetailCard from "@/app/components/product/DetailCard";
 import Comment from "@/app/components/product/Comment";
+import DetailCard from "@/app/components/product/DetailCard";
 import Header from "@/app/components/product/Header";
-import { useEffect, useState } from "react";
 import { ProductsDetail } from "@/app/types/products";
 import { getData } from "@/app/utils/axios/fetch";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function Page() {
+  const router = useRouter();
+
   const [data, setData] = useState<ProductsDetail>();
   const [currentImage, setCurrentImage] = useState<string | null>(null);
 
@@ -14,11 +18,17 @@ export default function Page() {
     const fetchProduct = async () => {
       const productId = localStorage.getItem("product");
 
-      if (!productId) return alert("NO PRODUCT ID");
+      if (!productId) {
+        toast.error("No current product is selected");
+        router.push("/products");
+      }
 
       const res = await getData<ProductsDetail>(`/products/${productId}`);
 
-      if (!res.success) return alert("FAILED GET PRODUCT DETAIL");
+      if (!res.success) {
+        toast.error(res.message);
+        router.push("/products");
+      }
 
       setCurrentImage(res.data?.product.image!);
       setData(res.data!);
