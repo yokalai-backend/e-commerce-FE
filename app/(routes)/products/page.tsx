@@ -1,17 +1,9 @@
 "use client";
 import Card from "@/app/components/products/Card";
 import Header from "@/app/components/products/Header";
+import { Products } from "@/app/types/products";
 import { getData } from "@/app/utils/axios/fetch";
 import { useEffect, useState } from "react";
-
-interface Products {
-  id: string;
-  name: string;
-  price: number;
-  rates: number;
-  image: string;
-  createdAt: string;
-}
 
 export default function Page() {
   const [products, setProducts] = useState<Products[]>();

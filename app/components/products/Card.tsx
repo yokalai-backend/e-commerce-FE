@@ -1,11 +1,6 @@
-interface Products {
-  id: string;
-  name: string;
-  price: number;
-  rates: number;
-  image: string;
-  createdAt: string;
-}
+import goToProductDetail from "@/app/utils/products/go.to.detail";
+import { Products } from "@/app/types/products";
+import { useRouter } from "next/navigation";
 
 export default function Card({
   id,
@@ -15,9 +10,14 @@ export default function Card({
   image,
   createdAt,
 }: Products) {
+  const router = useRouter();
+
   return (
     <main className="flex flex-col gap-2">
-      <header className="flex flex-col gap-3">
+      <header
+        onClick={() => goToProductDetail(id, router)}
+        className="flex flex-col gap-3"
+      >
         <div className="w-full">
           <img
             className="w-full h-50 object-contain rounded-lg"
