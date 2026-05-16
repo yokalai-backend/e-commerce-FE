@@ -1,5 +1,6 @@
-import goToProductDetail from "@/app/utils/products/go.to.detail";
 import { Products } from "@/app/types/products";
+import addToCart from "@/app/utils/products/add.to.cart";
+import goToProductDetail from "@/app/utils/products/go.to.detail";
 import { useRouter } from "next/navigation";
 
 export default function Card({
@@ -34,7 +35,10 @@ export default function Card({
         <p className="text-sm">{rates}</p>
       </section>
 
-      <button className="w-full bg-black text-white rounded-2xl py-1 active:translate-y-1 active:scale-95 transition">
+      <button
+        onClick={() => addToCart(id)}
+        className="w-full bg-black text-white rounded-2xl py-1 active:translate-y-1 active:scale-95 transition"
+      >
         Add to cart
       </button>
     </main>

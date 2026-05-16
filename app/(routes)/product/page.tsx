@@ -4,6 +4,7 @@ import DetailCard from "@/app/components/product/DetailCard";
 import Header from "@/app/components/product/Header";
 import { ProductsDetail } from "@/app/types/products";
 import { getData } from "@/app/utils/axios/fetch";
+import addToCart from "@/app/utils/products/add.to.cart";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -15,15 +16,18 @@ export default function Page() {
   const [currentImage, setCurrentImage] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      const productId = localStorage.getItem("product");
+    const productId = localStorage.getItem("product");
 
+    const fetchProduct = async () => {
       if (!productId) {
         toast.error("No current product is selected");
         router.push("/products");
       }
 
-      const res = await getData<ProductsDetail>(`/products/${productId}`);
+      const res = await getData<ProductsDetail>(
+        `/products/${productId}`,
+        false,
+      );
 
       if (!res.success) {
         toast.error(res.message);
@@ -46,6 +50,7 @@ export default function Page() {
         image={currentImage!}
         images={data.product.images}
         setCurrentImage={setCurrentImage}
+        router={router}
       />
 
       <section className="grid grid-cols-3 gap-3">
@@ -57,7 +62,12 @@ export default function Page() {
         <DetailCard title={"Category"} value={data.product.category} />
       </section>
 
-      <button className="border border-black/80 py-2 rounded-2xl active:translate-y-2 active:scale-95 transition">
+      <button
+        onClick={() =>
+          addToCart(localStorage.getItem("product")!, { router: router })
+        }
+        className="border border-black/80 py-2 rounded-2xl active:translate-y-2 active:scale-95 transition"
+      >
         Add to cart
       </button>
 

@@ -5,15 +5,20 @@ export default function Header({
   image,
   images,
   setCurrentImage,
+  router,
 }: {
   name: string;
   image: string;
   images: string[];
   setCurrentImage: any;
+  router: any;
 }) {
   return (
     <header className="flex flex-col gap-3">
-      <button className="text-sm text-left text-black/70 underline">
+      <button
+        onClick={() => router.back()}
+        className="text-sm text-left text-black/70 underline"
+      >
         Go back
       </button>
 
@@ -23,7 +28,7 @@ export default function Header({
 
       {images && (
         <div className="flex flex-col">
-          <h2 className="text-lg text-black/80 font-semibold border-b border-b-black/20 border-l-4 border-l-black/20 px-3 rounded-2xl mb-4">
+          <h2 className="text-lg text-black/80 font-semibold border-b border-b-black/20 border-l-4 border-l-black/20 px-3 rounded-2xl mb-4 mt-4">
             Preview
           </h2>
 
