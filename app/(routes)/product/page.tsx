@@ -2,8 +2,10 @@
 import Comment from "@/app/components/product/Comment";
 import DetailCard from "@/app/components/product/DetailCard";
 import Header from "@/app/components/product/Header";
+import useInput from "@/app/hooks/useInput";
 import { ProductsDetail } from "@/app/types/products";
 import { getData } from "@/app/utils/axios/fetch";
+import sendComment from "@/app/utils/product/send.comment";
 import addToCart from "@/app/utils/products/add.to.cart";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,6 +14,8 @@ import { toast } from "sonner";
 export default function Page() {
   const router = useRouter();
 
+  const comment = useInput();
+  const [commentAdded, setCommentAdded] = useState(false);
   const [data, setData] = useState<ProductsDetail>();
   const [currentImage, setCurrentImage] = useState<string | null>(null);
 
@@ -39,7 +43,7 @@ export default function Page() {
     };
 
     fetchProduct();
-  }, []);
+  }, [commentAdded]);
 
   if (!data) return;
 
@@ -77,10 +81,21 @@ export default function Page() {
             className="bg-gray-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none"
             type="text"
             placeholder="Coment..."
+            onChange={comment.onChange}
+            value={comment.value}
           />
 
           <div className="flex gap-2">
-            <button className="bg-black px-2 rounded-lg text-white active:scale-95 active:translate-y-1 transition">
+            <button
+              onClick={async () => {
+                await sendComment(
+                  localStorage.getItem("product")!,
+                  comment.value,
+                );
+                setCommentAdded((p) => !p);
+              }}
+              className="bg-black px-2 rounded-lg text-white active:scale-95 active:translate-y-1 transition"
+            >
               Send
             </button>
 
@@ -97,6 +112,7 @@ export default function Page() {
             <Comment
               key={i}
               userId={e.userId}
+              id={e.id}
               username={e.username}
               comment={e.comment}
               rates={e.rates}

@@ -17,6 +17,7 @@ export type ProductDetails = {
 
 export type Comments = {
   username: string;
+  id: string;
   userId: string;
   rates: number;
   comment: string;

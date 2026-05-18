@@ -1,6 +1,7 @@
 import doubleConfirmation from "@/app/utils/ui/double.confirmation";
 import { useState } from "react";
 import { toast } from "sonner";
+import orderItems from "@/app/utils/cart/orders.items";
 
 export default function Header({ router, clearCart, products }: any) {
   const [isClearCart, setIsClearCart] = useState(false);
@@ -36,7 +37,10 @@ export default function Header({ router, clearCart, products }: any) {
           Clear cart
         </button>
 
-        <button className="px-3 py-1.5 border border-black/50 rounded-lg text-black/70 active:translate-y-1 active:scale-95 transition select-none">
+        <button
+          onClick={orderItems}
+          className="px-3 py-1.5 border border-black/50 rounded-lg text-black/70 active:translate-y-1 active:scale-95 transition select-none"
+        >
           Order now
         </button>
       </div>
